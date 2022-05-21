@@ -1,1 +1,1 @@
-# Earthquake-Challenge
+# Mapping Earthquakes
