@@ -21,6 +21,8 @@ let map = L.map('mapid', {
 	zoom: 3,
 	layers: [streets]
 });
+//Nick
+//map.legendControl.addLegend(document.getElementById('legend').innerHTML);
 
 // Create a base layer that holds all three maps.
 let baseMaps = {
@@ -126,15 +128,13 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     
     // 5. Change the color function to use three colors for the major earthquakes based on the magnitude of the earthquake.
     function getColor(magnitude) {
-      if (magnitude<= 5) {
-        return "#f27f1b";
-      }
-      if (magnitude > 5) {
+      if (magnitude > 6) {
         return "#ea2c2c";
       }
-      if (magnitude > 6) {
-        return "#080707";
+      if (magnitude > 5) {
+        return "#ea822c";
       }
+        return "#eecc00";
     }
     
     // 6. Use the function that determines the radius of the earthquake marker based on its magnitude.
@@ -164,7 +164,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     }).addTo(majorEQ);
     
     majorEQ.addTo(map);
-
+  });
   // Here we create a legend control object.
 let legend = L.control({
   position: "bottomright"
@@ -188,9 +188,10 @@ legend.onAdd = function() {
   for (var i = 0; i < magnitudes.length; i++) {
     console.log(colors[i]);
     div.innerHTML +=
-      "<i style='background: " + colors[i] + "'></i> " +
-      magnitudes[i] + (magnitudes[i + 1] ? "&ndash;" + magnitudes[i + 1] + "<br>" : "+");
+      "<i style='background: " + colors[i] + "'> " +
+      magnitudes[i] + (magnitudes[i + 1] ? "&ndash;" + magnitudes[i + 1] + "</i><br>" : "+");
     }
+    console.log(div.innerHTML);
     return div;
   };
 
@@ -200,16 +201,16 @@ legend.onAdd = function() {
 
   // 3. Use d3.json to make a call to get our Tectonic Plate geoJSON data.
   // Create a style for the lines.
-let myStyle = {
-  color: "#edbb07",
-  weight: 2
-}
+//let myStyle = {
+ // color: "#edbb07",
+ // weight: 2
+//}
   d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json").then(function(data) {
     console.log(data);
-  L.geoJson(data, {
-    style:myStyle,
-  })
-  .addTo(tectonicPlates);})
+  L.geoJson(data 
+    //style:myStyle,
+  )
+  .addTo(tectonicPlates);
 tectonicPlates.addTo(map);
-  })
+  });
 });
